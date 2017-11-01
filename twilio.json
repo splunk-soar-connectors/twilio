@@ -1,0 +1,289 @@
+{
+    "appid": "52806877-edb2-4d80-bf32-a6ca13c4b58f",
+    "name": "Twilio",
+    "description": "This apps integrates with Twilio to send messages",
+    "type": "devops",
+    "product_vendor": "Twilio",
+    "logo": "twilio.png",
+    "product_name": "Twilio",
+    "product_version_regex": ".*",
+    "publisher": "Phantom",
+    "license": "Copyright Phantom 2017",
+    "app_version": "1.0.0",
+    "utctime_updated": "2017-10-05T01:10:33.031543Z",
+    "package_name": "phantom_twilio",
+    "main_module": "twilio_connector.pyc",
+    "min_phantom_version": "3.0.251",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "base_url": {
+            "description": "Twilio Base URL",
+            "data_type": "string",
+            "required": true,
+            "value_list": [],
+            "default": "https://api.twilio.com/2010-04-01",
+            "order": 0
+        },
+        "account_sid": {
+            "description": "Account SID",
+            "data_type": "string",
+            "required": true,
+            "value_list": [],
+            "default": "",
+            "order": 1
+        },
+        "auth_token": {
+            "description": "Auth Token",
+            "data_type": "password",
+            "required": true,
+            "value_list": [],
+            "order": 2
+        },
+        "from_phone": {
+            "description": "From Phone Number (Twilio Assigned)",
+            "data_type": "string",
+            "required": true,
+            "value_list": [],
+            "default": "",
+            "order": 3
+        },
+        "to_phone": {
+            "description": "To Phone Number (Used only for test connectivity)",
+            "data_type": "string",
+            "required": false,
+            "value_list": [],
+            "default": "",
+            "order": 4
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "send message",
+            "identifier": "send_text",
+            "description": "Send an SMS Text",
+            "verbose": "Sends an SMS text to the specified Phone number",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "to_phone": {
+                    "description": "To Phone Number. If country code not specified will default to +1",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "phone number"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                },
+                "message": {
+                    "description": "Message to send",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "value_list": [],
+                    "default": "",
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.to_phone",
+                    "data_type": "string",
+                    "contains": [
+                        "phone number"
+                    ],
+                    "column_name": "to phone",
+                    "column_order": 0,
+                    "example_values": [
+                        "5103714194"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.message",
+                    "data_type": "string",
+                    "column_name": "message",
+                    "column_order": 1,
+                    "example_values": [
+                        "Happy Halloween to GV"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "",
+                        "Error from server. Status Code: 404 Data from server: {\"code\": 20404, \"message\": \"The requested resource /2010-04-01/Accounts/AC538f48541a49795fef18219497c4710/Messages.json was not found\", \"more_info\": \"https://www.twilio.com/docs/errors/20404\", \"status\": 404}",
+                        "Message delivery status: delivered"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body",
+                    "data_type": "string",
+                    "example_values": [
+                        "Sent from your Twilio trial account - Happy Halloween to GV"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 2,
+                    "example_values": [
+                        "queued",
+                        "delivered"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.direction",
+                    "data_type": "string",
+                    "example_values": [
+                        "outbound-api"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.from",
+                    "data_type": "string",
+                    "example_values": [
+                        "+15106741618"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.num_segments",
+                    "data_type": "string",
+                    "example_values": [
+                        "1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.date_updated",
+                    "data_type": "string",
+                    "example_values": [
+                        "Wed, 01 Nov 2017 20:56:57 +0000",
+                        "Wed, 01 Nov 2017 22:31:18 +0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.uri",
+                    "data_type": "string",
+                    "example_values": [
+                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM0b5ab6decd8146398c975ae9c3511281.json",
+                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM48acc143c7764e599599970933d6d68f.json"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.account_sid",
+                    "data_type": "string",
+                    "example_values": [
+                        "AC538f48541a49795fef18219497c47101"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.num_media",
+                    "data_type": "string",
+                    "example_values": [
+                        "0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.to",
+                    "data_type": "string",
+                    "example_values": [
+                        "+15103714194"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sid",
+                    "data_type": "string",
+                    "example_values": [
+                        "SM0b5ab6decd8146398c975ae9c3511281",
+                        "SM48acc143c7764e599599970933d6d68f"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.date_created",
+                    "data_type": "string",
+                    "example_values": [
+                        "Wed, 01 Nov 2017 20:56:57 +0000",
+                        "Wed, 01 Nov 2017 22:31:16 +0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.subresource_uris.media",
+                    "data_type": "string",
+                    "example_values": [
+                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM0b5ab6decd8146398c975ae9c3511281/Media.json",
+                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM48acc143c7764e599599970933d6d68f/Media.json"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.price_unit",
+                    "data_type": "string",
+                    "example_values": [
+                        "USD"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.api_version",
+                    "data_type": "string",
+                    "example_values": [
+                        "2010-04-01"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.date_sent",
+                    "data_type": "string",
+                    "example_values": [
+                        "Wed, 01 Nov 2017 22:31:16 +0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.message_delivery_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "delivered"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}

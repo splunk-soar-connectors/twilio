@@ -194,7 +194,7 @@ class TwilioConnector(BaseConnector):
 
             polling_attempt += 1
 
-            self.save_progress("Polling attempt {0} of {1}".format(polling_attempt, max_polling_attempts))
+            self.send_progress("Polling attempt {0} of {1} to check status of message delivery".format(polling_attempt, max_polling_attempts))
 
             ret_val, response = self._make_rest_call("/Messages/{0}.json".format(message_id), action_result)
 

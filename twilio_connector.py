@@ -199,12 +199,12 @@ class TwilioConnector(BaseConnector):
             ret_val, response = self._make_rest_call("/Messages/{0}.json".format(message_id), action_result)
 
             if (phantom.is_fail(ret_val)):
-                return (action_result.get_status(), None)
+                return RetVal(action_result.get_status(), None)
 
             status = response.get('status')
 
             if (not status):
-                return (action_result.set_status(phantom.APP_ERROR, "Status key not part of the response"), None)
+                return RetVal(action_result.set_status(phantom.APP_ERROR, "Status key not part of the response"), None)
 
             if (status in consts.TWILIO_FINAL_STATUS):
                 break
@@ -226,7 +226,7 @@ class TwilioConnector(BaseConnector):
         sid = response.get('sid')
 
         if (not sid):
-            return action_result.set_status(phantom.APP_ERROR, "SID not part of the response")
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "SID not part of the response"))
 
         # try to get the status of the text message
         ret_val, response = self._poll_task_status(sid, action_result)

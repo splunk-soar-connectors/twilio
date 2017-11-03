@@ -163,19 +163,20 @@ class TwilioConnector(BaseConnector):
             self.save_progress("Destination phone number not specified in asset, so listing account details to check connectivity ")
 
             # make rest call
-            ret_val, response = self._make_rest_call('/Accounts.json', action_result, data=data, method="post")
+            ret_val, response = self._make_rest_call('.json', action_result, method="get")
 
             if (phantom.is_fail(ret_val)):
                 self.save_progress("Test Connectivity Failed")
                 return action_result.get_status()
 
-        self.save_progress("Destination phone number found in asset, trying sending a message to test connectivity ")
+        else:
+            self.save_progress("Destination phone number found in asset, trying to send a message to test connectivity ")
 
-        ret_val, _ = self._send_text(action_result, "Testing connectivity from Phantom to Twilio", self._to_phone)
+            ret_val, _ = self._send_text(action_result, "Testing connectivity from Phantom to Twilio", self._to_phone)
 
-        if (phantom.is_fail(ret_val)):
-            self.save_progress("Test connectivity Failed")
-            return action_result.get_status()
+            if (phantom.is_fail(ret_val)):
+                self.save_progress("Test connectivity Failed")
+                return action_result.get_status()
 
         self.save_progress("Test connectivity Passed")
 

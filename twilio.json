@@ -17,7 +17,7 @@
     "app_wizard_version": "1.0.0",
     "configuration": {
         "base_url": {
-            "description": "Twilio Base URL",
+            "description": "Twilio Base URL (e.g. https://api.twilio.com/2010-04-01)",
             "data_type": "string",
             "required": true,
             "value_list": [],
@@ -40,7 +40,7 @@
             "order": 2
         },
         "from_phone": {
-            "description": "From Phone Number (Twilio Assigned)",
+            "description": "From Phone Number (Twilio Assigned, e.g. +15101281337)",
             "data_type": "string",
             "required": true,
             "value_list": [],

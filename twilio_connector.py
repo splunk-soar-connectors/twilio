@@ -170,7 +170,7 @@ class TwilioConnector(BaseConnector):
                 return action_result.get_status()
 
         else:
-            self.save_progress("Destination phone number found in asset, trying sending a message to test connectivity ")
+            self.save_progress("Destination phone number found in asset, trying to send a message to test connectivity ")
 
             ret_val, _ = self._send_text(action_result, "Testing connectivity from Phantom to Twilio", self._to_phone)
 

@@ -1,7 +1,7 @@
 {
     "appid": "52806877-edb2-4d80-bf32-a6ca13c4b58f",
     "name": "Twilio",
-    "description": "This apps integrates with Twilio to send messages",
+    "description": "This app integrates with Twilio to send messages",
     "type": "devops",
     "product_vendor": "Twilio",
     "logo": "twilio.png",
@@ -36,7 +36,6 @@
             "description": "Auth Token",
             "data_type": "password",
             "required": true,
-            "value_list": [],
             "order": 2
         },
         "from_phone": {

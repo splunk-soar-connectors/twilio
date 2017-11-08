@@ -272,6 +272,22 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.price",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.error_message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.messaging_service_sid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.error_code",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.summary.message_delivery_status",
                     "data_type": "string",
                     "example_values": [

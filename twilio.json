@@ -132,7 +132,7 @@
                     "data_type": "string",
                     "example_values": [
                         "",
-                        "Error from server. Status Code: 404 Data from server: {\"code\": 20404, \"message\": \"The requested resource /2010-04-01/Accounts/AC538f48541a49795fef18219497c4710/Messages.json was not found\", \"more_info\": \"https://www.twilio.com/docs/errors/20404\", \"status\": 404}",
+                        "Error from server. Status Code: 404 Data from server: {\"code\": 20404, \"message\": \"The requested resource /2010-04-01/Accounts/ABCDEF48541a49795fef1821fef18219497c4710/Messages.json was not found\", \"more_info\": \"https://www.twilio.com/docs/errors/20404\", \"status\": 404}",
                         "Message delivery status: delivered"
                     ]
                 },
@@ -201,15 +201,15 @@
                     "data_path": "action_result.data.*.uri",
                     "data_type": "string",
                     "example_values": [
-                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM0b5ab6decd8146398c975ae9c3511281.json",
-                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM48acc143c7764e599599970933d6d68f.json"
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SM0123b6decd8146398c975ae9c3111111.json",
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SAZ123AB33c7764e599999970933d6d68f.json"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.account_sid",
                     "data_type": "string",
                     "example_values": [
-                        "AC538f48541a49795fef18219497c47101"
+                        "ABCDEF48541a49795fef18219497c47101"
                     ]
                 },
                 {
@@ -230,8 +230,8 @@
                     "data_path": "action_result.data.*.sid",
                     "data_type": "string",
                     "example_values": [
-                        "SM0b5ab6decd8146398c975ae9c3511281",
-                        "SM48acc143c7764e599599970933d6d68f"
+                        "SM0123b6decd8146398c975ae9c3111111",
+                        "SAZ123AB33c7764e599999970933d6d68f"
                     ]
                 },
                 {
@@ -246,8 +246,8 @@
                     "data_path": "action_result.data.*.subresource_uris.media",
                     "data_type": "string",
                     "example_values": [
-                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM0b5ab6decd8146398c975ae9c3511281/Media.json",
-                        "/2010-04-01/Accounts/AC538f48541a49795fef18219497c47101/Messages/SM48acc143c7764e599599970933d6d68f/Media.json"
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SM0123b6decd8146398c975ae9c3111111/Media.json",
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SAZ123AB33c7764e599999970933d6d68f/Media.json"
                     ]
                 },
                 {

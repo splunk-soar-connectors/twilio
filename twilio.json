@@ -4,7 +4,8 @@
     "description": "This app integrates with Twilio to send messages",
     "type": "devops",
     "product_vendor": "Twilio",
-    "logo": "twilio.png",
+    "logo": "logo_twilio.svg",
+    "logo_dark": "logo_twilio_dark.svg",
     "product_name": "Twilio",
     "product_version_regex": ".*",
     "publisher": "Phantom",
@@ -99,15 +100,11 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.parameter.to_phone",
+                    "data_path": "action_result.status",
                     "data_type": "string",
-                    "contains": [
-                        "phone number"
-                    ],
-                    "column_name": "to phone",
-                    "column_order": 0,
                     "example_values": [
-                        "5101112222"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -120,11 +117,158 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.parameter.to_phone",
+                    "data_type": "string",
+                    "contains": [
+                        "phone number"
+                    ],
+                    "column_name": "to phone",
+                    "column_order": 0,
+                    "example_values": [
+                        "5101112222"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.account_sid",
                     "data_type": "string",
                     "example_values": [
-                        "success",
-                        "failed"
+                        "ABCDEF48541a49795fef18219497c47101"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.api_version",
+                    "data_type": "string",
+                    "example_values": [
+                        "2010-04-01"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.body",
+                    "data_type": "string",
+                    "example_values": [
+                        "Sent from your Twilio trial account - Happy Halloween to GV"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.date_created",
+                    "data_type": "string",
+                    "example_values": [
+                        "Wed, 01 Nov 2017 20:56:57 +0000",
+                        "Wed, 01 Nov 2017 22:31:16 +0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.date_sent",
+                    "data_type": "string",
+                    "example_values": [
+                        "Wed, 01 Nov 2017 22:31:16 +0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.date_updated",
+                    "data_type": "string",
+                    "example_values": [
+                        "Wed, 01 Nov 2017 20:56:57 +0000",
+                        "Wed, 01 Nov 2017 22:31:18 +0000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.direction",
+                    "data_type": "string",
+                    "example_values": [
+                        "outbound-api"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.from",
+                    "data_type": "string",
+                    "example_values": [
+                        "+15102223333"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.num_media",
+                    "data_type": "string",
+                    "example_values": [
+                        "0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.num_segments",
+                    "data_type": "string",
+                    "example_values": [
+                        "1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.price_unit",
+                    "data_type": "string",
+                    "example_values": [
+                        "USD"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sid",
+                    "data_type": "string",
+                    "example_values": [
+                        "SM0123b6decd8146398c975ae9c3111111",
+                        "SAZ123AB33c7764e599999970933d6d68f"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 2,
+                    "example_values": [
+                        "queued",
+                        "delivered"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.subresource_uris.media",
+                    "data_type": "string",
+                    "example_values": [
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SM0123b6decd8146398c975ae9c3111111/Media.json",
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SAZ123AB33c7764e599999970933d6d68f/Media.json"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.to",
+                    "data_type": "string",
+                    "example_values": [
+                        "+15101112222"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.uri",
+                    "data_type": "string",
+                    "example_values": [
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SM0123b6decd8146398c975ae9c3111111.json",
+                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SAZ123AB33c7764e599999970933d6d68f.json"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.error_code",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.error_message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.messaging_service_sid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.price",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.message_delivery_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "delivered"
                     ]
                 },
                 {
@@ -149,149 +293,6 @@
                     "example_values": [
                         1,
                         0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.body",
-                    "data_type": "string",
-                    "example_values": [
-                        "Sent from your Twilio trial account - Happy Halloween to GV"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.status",
-                    "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 2,
-                    "example_values": [
-                        "queued",
-                        "delivered"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.direction",
-                    "data_type": "string",
-                    "example_values": [
-                        "outbound-api"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.from",
-                    "data_type": "string",
-                    "example_values": [
-                        "+15102223333"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.num_segments",
-                    "data_type": "string",
-                    "example_values": [
-                        "1"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.date_updated",
-                    "data_type": "string",
-                    "example_values": [
-                        "Wed, 01 Nov 2017 20:56:57 +0000",
-                        "Wed, 01 Nov 2017 22:31:18 +0000"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.uri",
-                    "data_type": "string",
-                    "example_values": [
-                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SM0123b6decd8146398c975ae9c3111111.json",
-                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SAZ123AB33c7764e599999970933d6d68f.json"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.account_sid",
-                    "data_type": "string",
-                    "example_values": [
-                        "ABCDEF48541a49795fef18219497c47101"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.num_media",
-                    "data_type": "string",
-                    "example_values": [
-                        "0"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.to",
-                    "data_type": "string",
-                    "example_values": [
-                        "+15101112222"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.sid",
-                    "data_type": "string",
-                    "example_values": [
-                        "SM0123b6decd8146398c975ae9c3111111",
-                        "SAZ123AB33c7764e599999970933d6d68f"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.date_created",
-                    "data_type": "string",
-                    "example_values": [
-                        "Wed, 01 Nov 2017 20:56:57 +0000",
-                        "Wed, 01 Nov 2017 22:31:16 +0000"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.subresource_uris.media",
-                    "data_type": "string",
-                    "example_values": [
-                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SM0123b6decd8146398c975ae9c3111111/Media.json",
-                        "/2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages/SAZ123AB33c7764e599999970933d6d68f/Media.json"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.price_unit",
-                    "data_type": "string",
-                    "example_values": [
-                        "USD"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.api_version",
-                    "data_type": "string",
-                    "example_values": [
-                        "2010-04-01"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.date_sent",
-                    "data_type": "string",
-                    "example_values": [
-                        "Wed, 01 Nov 2017 22:31:16 +0000"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.price",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.error_message",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.messaging_service_sid",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.error_code",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.summary.message_delivery_status",
-                    "data_type": "string",
-                    "example_values": [
-                        "delivered"
                     ]
                 }
             ],

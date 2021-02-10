@@ -1,7 +1,7 @@
 {
     "appid": "52806877-edb2-4d80-bf32-a6ca13c4b58f",
     "name": "Twilio",
-    "description": "This app integrates with Twilio to send messages",
+    "description": "This app integrates with Twilio for sending messages",
     "type": "devops",
     "product_vendor": "Twilio",
     "logo": "logo_twilio.svg",

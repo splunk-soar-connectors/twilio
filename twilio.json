@@ -77,7 +77,8 @@
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "phone number"
+                        "phone number",
+                        "phone"
                     ],
                     "order": 0
                 },
@@ -93,7 +94,8 @@
                     "data_path": "action_result.parameter.to_phone",
                     "data_type": "string",
                     "contains": [
-                        "phone number"
+                        "phone number",
+                        "phone"
                     ],
                     "column_name": "to phone",
                     "column_order": 0,

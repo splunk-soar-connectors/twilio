@@ -1,26 +1,30 @@
 {
     "appid": "52806877-edb2-4d80-bf32-a6ca13c4b58f",
     "name": "Twilio",
-    "description": "This app integrates with Twilio to send messages",
+    "description": "This app integrates with Twilio for sending messages",
     "type": "devops",
     "product_vendor": "Twilio",
-    "logo": "twilio.png",
+    "logo": "logo_twilio.svg",
+    "logo_dark": "logo_twilio_dark.svg",
     "product_name": "Twilio",
     "product_version_regex": ".*",
-    "publisher": "Phantom",
-    "license": "Copyright (c) Phantom Cyber Corporation, 2017",
-    "app_version": "1.0.10",
-    "utctime_updated": "2018-12-07T01:48:51.000000Z",
+    "publisher": "Splunk",
+    "license": "Copyright (c) 2017-2021 Splunk Inc.",
+    "app_version": "2.0.0",
+    "utctime_updated": "2018-01-26T00:50:11.000000Z",
     "package_name": "phantom_twilio",
-    "main_module": "twilio_connector.pyc",
-    "min_phantom_version": "3.0.251",
+    "main_module": "twilio_connector.py",
+    "min_phantom_version": "4.9.39220",
+    "latest_tested_versions": [
+        "Twilio Cloud, 2021 on 02/10/2021"
+    ],
     "app_wizard_version": "1.0.0",
+    "python_version": "3",
     "configuration": {
         "base_url": {
             "description": "Twilio Base URL (e.g. https://api.twilio.com/2010-04-01)",
             "data_type": "string",
             "required": true,
-            "value_list": [],
             "default": "https://api.twilio.com/2010-04-01",
             "order": 0
         },
@@ -28,8 +32,6 @@
             "description": "Account SID",
             "data_type": "string",
             "required": true,
-            "value_list": [],
-            "default": "",
             "order": 1
         },
         "auth_token": {
@@ -42,16 +44,11 @@
             "description": "From Phone Number (Twilio Assigned, e.g. +15101281337)",
             "data_type": "string",
             "required": true,
-            "value_list": [],
-            "default": "",
             "order": 3
         },
         "to_phone": {
             "description": "To Phone Number (Used only for test connectivity)",
             "data_type": "string",
-            "required": false,
-            "value_list": [],
-            "default": "",
             "order": 4
         }
     },
@@ -60,7 +57,6 @@
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
-            "verbose": "",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -71,7 +67,7 @@
             "action": "send message",
             "identifier": "send_text",
             "description": "Send an SMS Text",
-            "verbose": "Sends an SMS text to the specified Phone number",
+            "verbose": "Sends an SMS text to the specified Phone number.",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -81,19 +77,15 @@
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "phone number"
+                        "phone number",
+                        "phone"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0
                 },
                 "message": {
                     "description": "Message to send",
                     "data_type": "string",
                     "required": true,
-                    "primary": true,
-                    "value_list": [],
-                    "default": "",
                     "order": 1
                 }
             },
@@ -102,12 +94,13 @@
                     "data_path": "action_result.parameter.to_phone",
                     "data_type": "string",
                     "contains": [
-                        "phone number"
+                        "phone number",
+                        "phone"
                     ],
                     "column_name": "to phone",
                     "column_order": 0,
                     "example_values": [
-                        "5101112222"
+                        "5101112345"
                     ]
                 },
                 {
@@ -131,8 +124,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "",
-                        "Error from server. Status Code: 404 Data from server: {\"code\": 20404, \"message\": \"The requested resource /2010-04-01/Accounts/ABCDEF48541a49795fef18219497c47101/Messages.json was not found\", \"more_info\": \"https://www.twilio.com/docs/errors/20404\", \"status\": 404}",
+                        "Error from server. Status Code: 404 Data from server: {\"code\": 20404, \"message\": \"The requested resource /2010-04-01/Accounts/ABCDEF48541a12345fef18219497c47101/Messages.json was not found\", \"more_info\": \"https://www.twilio.com/docs/errors/20404\", \"status\": 404}",
                         "Message delivery status: delivered"
                     ]
                 },
@@ -179,7 +171,7 @@
                     "data_path": "action_result.data.*.from",
                     "data_type": "string",
                     "example_values": [
-                        "+15102223333"
+                        "+15123456789"
                     ]
                 },
                 {
@@ -230,8 +222,8 @@
                     "data_path": "action_result.data.*.sid",
                     "data_type": "string",
                     "example_values": [
-                        "SM0123b6decd8146398c975ae9c3111111",
-                        "SAZ123AB33c7764e599999970933d6d68f"
+                        "SM0123b6decd8146398c975ae9c3123456",
+                        "SAZ123AB33c7764e599123456789d6d68f"
                     ]
                 },
                 {
@@ -293,6 +285,31 @@
                     "example_values": [
                         "delivered"
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.price",
+                    "data_type": "string",
+                    "example_value": "-0.03500"
+                },
+                {
+                    "data_path": "action_result.data.*.error_code",
+                    "data_type": "string",
+                    "example_value": "21211"
+                },
+                {
+                    "data_path": "action_result.data.*.error_message",
+                    "data_type": "string",
+                    "example_value": "The 'To' number +911234567899 is not a valid phone number."
+                },
+                {
+                    "data_path": "action_result.data.*.subresource_uris.feedback",
+                    "data_type": "string",
+                    "example_value": "/2010-04-01/Accounts/testf53c477260aa84c1234a67025cf2/Messages/Test2faa0d862f4ffabd14f12345aa8b2/Feedback.json"
+                },
+                {
+                    "data_path": "action_result.data.*.messaging_service_sid",
+                    "data_type": "string",
+                    "example_value": "TE4s6td2d8eee12a9b123456789a123e91"
                 }
             ],
             "render": {

@@ -15,6 +15,7 @@
     "package_name": "phantom_twilio",
     "main_module": "twilio_connector.py",
     "min_phantom_version": "4.9.39220",
+    "fips_compliant": true,
     "latest_tested_versions": [
         "Twilio Cloud, 2021 on 02/10/2021"
     ],

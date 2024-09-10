@@ -6,7 +6,7 @@ Connector Version: 2.0.2
 Product Vendor: Twilio  
 Product Name: Twilio  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 6.2.1  
+Minimum Product Version: 4.9.39220  
 
 This app integrates with Twilio for sending messages
 

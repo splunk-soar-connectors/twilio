@@ -15,7 +15,7 @@
     "utctime_updated": "2022-01-07T22:47:19.000000Z",
     "package_name": "phantom_twilio",
     "main_module": "twilio_connector.py",
-    "min_phantom_version": "6.2.1",
+    "min_phantom_version": "4.9.39220",
     "latest_tested_versions": [
         "Twilio Cloud, 2021 on 02/10/2021"
     ],

@@ -2,7 +2,7 @@
 # Twilio
 
 Publisher: Splunk  
-Connector Version: 2.0.2  
+Connector Version: 2.0.3  
 Product Vendor: Twilio  
 Product Name: Twilio  
 Product Version Supported (regex): ".\*"  

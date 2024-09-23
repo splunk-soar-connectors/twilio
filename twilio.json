@@ -11,7 +11,7 @@
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2024 Splunk Inc.",
     "fips_compliant": false,
-    "app_version": "2.0.2",
+    "app_version": "2.0.3",
     "utctime_updated": "2022-01-07T22:47:19.000000Z",
     "package_name": "phantom_twilio",
     "main_module": "twilio_connector.py",

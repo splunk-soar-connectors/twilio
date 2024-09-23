@@ -71,16 +71,15 @@ class TwilioConnector(BaseConnector):
             for element in soup(["script", "style", "footer", "nav"]):
                 element.extract()
             error_text = soup.text
-            split_lines = error_text.split('\n')
+            split_lines = error_text.split("\n")
             split_lines = [x.strip() for x in split_lines if x.strip()]
-            error_text = '\n'.join(split_lines)
+            error_text = "\n".join(split_lines)
         except:
             error_text = "Cannot parse error details"
 
-        message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code,
-                error_text)
+        message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code, error_text)
 
-        message = message.replace('{', '{{').replace('}', '}}')
+        message = message.replace("{", "{{").replace("}", "}}")
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -97,30 +96,29 @@ class TwilioConnector(BaseConnector):
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
         # You should process the error returned in the json
-        message = "Error from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+        message = "Error from server. Status Code: {0} Data from server: {1}".format(r.status_code, r.text.replace("{", "{{").replace("}", "}}"))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _process_response(self, r, action_result):
 
         # store the r_text in debug data, it will get dumped in the logs if the action fails
-        if hasattr(action_result, 'add_debug_data'):
-            action_result.add_debug_data({'r_status_code': r.status_code})
-            action_result.add_debug_data({'r_text': r.text})
-            action_result.add_debug_data({'r_headers': r.headers})
+        if hasattr(action_result, "add_debug_data"):
+            action_result.add_debug_data({"r_status_code": r.status_code})
+            action_result.add_debug_data({"r_text": r.text})
+            action_result.add_debug_data({"r_headers": r.headers})
 
         # Process each 'Content-Type' of response separately
 
         # Process a json response
-        if 'json' in r.headers.get('Content-Type', ''):
+        if "json" in r.headers.get("Content-Type", ""):
             return self._process_json_response(r, action_result)
 
         # Process an HTML resonse, Do this no matter what the api talks.
         # There is a high chance of a PROXY in between phantom and the rest of
         # world, in case of errors, PROXY's return HTML, this function parses
         # the error and adds it to the action_result.
-        if 'html' in r.headers.get('Content-Type', ''):
+        if "html" in r.headers.get("Content-Type", ""):
             return self._process_html_response(r, action_result)
 
         # it's not content-type that is to be parsed, handle an empty response
@@ -129,7 +127,8 @@ class TwilioConnector(BaseConnector):
 
         # everything else is actually an error at this point
         message = "Can't process response from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+            r.status_code, r.text.replace("{", "{{").replace("}", "}}")
+        )
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -148,15 +147,9 @@ class TwilioConnector(BaseConnector):
         url = "{0}/Accounts/{1}{2}".format(self._base_url, self._account_sid, endpoint)
 
         try:
-            r = request_func(
-                            url,
-                            auth=(config['account_sid'], config['auth_token']),
-                            data=data,
-                            headers=headers,
-                            params=params)
+            r = request_func(url, auth=(config["account_sid"], config["auth_token"]), data=data, headers=headers, params=params)
         except Exception as e:
-            return RetVal(action_result.set_status( phantom.APP_ERROR,
-                "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -164,13 +157,13 @@ class TwilioConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        if (self._to_phone is None):
+        if self._to_phone is None:
             self.save_progress("Connecting to the Twilio account to check connectivity")
 
             # make rest call
-            ret_val, response = self._make_rest_call('.json', action_result, method="get")
+            ret_val, response = self._make_rest_call(".json", action_result, method="get")
 
-            if (phantom.is_fail(ret_val)):
+            if phantom.is_fail(ret_val):
                 self.save_progress("Test Connectivity Failed")
                 return action_result.get_status()
 
@@ -179,7 +172,7 @@ class TwilioConnector(BaseConnector):
 
             ret_val, _ = self._send_text(action_result, "Testing connectivity from Phantom to Twilio", self._to_phone)
 
-            if (phantom.is_fail(ret_val)):
+            if phantom.is_fail(ret_val):
                 self.save_progress("Test connectivity Failed")
                 return action_result.get_status()
 
@@ -196,7 +189,7 @@ class TwilioConnector(BaseConnector):
 
         max_polling_attempts = (int(timeout) * 60) / consts.TWILIO_SLEEP_SECS
 
-        while (polling_attempt < max_polling_attempts):
+        while polling_attempt < max_polling_attempts:
 
             polling_attempt += 1
 
@@ -204,15 +197,15 @@ class TwilioConnector(BaseConnector):
 
             ret_val, response = self._make_rest_call("/Messages/{0}.json".format(message_id), action_result)
 
-            if (phantom.is_fail(ret_val)):
+            if phantom.is_fail(ret_val):
                 return RetVal(action_result.get_status(), None)
 
-            status = response.get('status')
+            status = response.get("status")
 
-            if (not status):
+            if not status:
                 return RetVal(action_result.set_status(phantom.APP_ERROR, "Status key not part of the response"), None)
 
-            if (status in consts.TWILIO_FINAL_STATUS):
+            if status in consts.TWILIO_FINAL_STATUS:
                 break
 
             time.sleep(consts.TWILIO_SLEEP_SECS)
@@ -221,23 +214,23 @@ class TwilioConnector(BaseConnector):
 
     def _send_text(self, action_result, body, to_phone):
 
-        data = {'Body': body, 'To': to_phone, 'From': self._from_phone}
+        data = {"Body": body, "To": to_phone, "From": self._from_phone}
 
         # make rest call
-        ret_val, response = self._make_rest_call('/Messages.json', action_result, data=data, method="post")
+        ret_val, response = self._make_rest_call("/Messages.json", action_result, data=data, method="post")
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
             return RetVal(action_result.get_status())
 
-        sid = response.get('sid')
+        sid = response.get("sid")
 
-        if (not sid):
+        if not sid:
             return RetVal(action_result.set_status(phantom.APP_ERROR, "SID not part of the response"))
 
         # try to get the status of the text message
         ret_val, response = self._poll_task_status(sid, action_result)
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
             return RetVal(action_result.get_status(), response)
 
         return RetVal(phantom.APP_SUCCESS, response)
@@ -251,18 +244,18 @@ class TwilioConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        body = param['message']
-        to_phone = param['to_phone']
+        body = param["message"]
+        to_phone = param["to_phone"]
 
         ret_val, response = self._send_text(action_result, body, to_phone)
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
             return action_result.get_status()
 
         # Add the response into the data section
         action_result.add_data(response)
 
-        action_result.update_summary({'message_delivery_status': response.get('status', 'unknown')})
+        action_result.update_summary({"message_delivery_status": response.get("status", "unknown")})
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -275,10 +268,10 @@ class TwilioConnector(BaseConnector):
 
         self.debug_print("action_id", self.get_action_identifier())
 
-        if action_id == 'test_connectivity':
+        if action_id == "test_connectivity":
             ret_val = self._handle_test_connectivity(param)
 
-        elif action_id == 'send_text':
+        elif action_id == "send_text":
             ret_val = self._handle_send_text(param)
 
         return ret_val
@@ -291,16 +284,17 @@ class TwilioConnector(BaseConnector):
 
         config = self.get_config()
 
-        self._base_url = config['base_url']
-        self._from_phone = config['from_phone']
+        self._base_url = config["base_url"]
+        self._from_phone = config["from_phone"]
 
-        if (not self._from_phone.startswith('+')):
-            return self.set_status(phantom.APP_ERROR,
-                    "Please specify the from_phone value with a country code starting with the + char for e.g +15101281337")
+        if not self._from_phone.startswith("+"):
+            return self.set_status(
+                phantom.APP_ERROR, "Please specify the from_phone value with a country code starting with the + char for e.g +15101281337"
+            )
 
-        self._account_sid = config['account_sid']
-        self._auth_token = config['auth_token']
-        self._to_phone = config.get('to_phone')
+        self._account_sid = config["account_sid"]
+        self._auth_token = config["auth_token"]
+        self._to_phone = config.get("to_phone")
 
         return phantom.APP_SUCCESS
 
@@ -311,7 +305,7 @@ class TwilioConnector(BaseConnector):
         return phantom.APP_SUCCESS
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     import argparse
     import sys
@@ -322,9 +316,9 @@ if __name__ == '__main__':
 
     argparser = argparse.ArgumentParser()
 
-    argparser.add_argument('input_test_json', help='Input Test JSON file')
-    argparser.add_argument('-u', '--username', help='username', required=False)
-    argparser.add_argument('-p', '--password', help='password', required=False)
+    argparser.add_argument("input_test_json", help="Input Test JSON file")
+    argparser.add_argument("-u", "--username", help="username", required=False)
+    argparser.add_argument("-p", "--password", help="password", required=False)
 
     args = argparser.parse_args()
     session_id = None
@@ -333,35 +327,36 @@ if __name__ == '__main__':
     username = args.username
     password = args.password
 
-    if (username is not None and password is None):
+    if username is not None and password is None:
 
         # User specified a username but not a password, so ask
         import getpass
+
         password = getpass.getpass("Password: ")
 
-    if (username and password):
+    if username and password:
         try:
             print("Accessing the Login page")
             r = requests.get(login_url, verify=False)
-            csrftoken = r.cookies['csrftoken']
+            csrftoken = r.cookies["csrftoken"]
 
             data = dict()
-            data['username'] = username
-            data['password'] = password
-            data['csrfmiddlewaretoken'] = csrftoken
+            data["username"] = username
+            data["password"] = password
+            data["csrfmiddlewaretoken"] = csrftoken
 
             headers = dict()
-            headers['Cookie'] = 'csrftoken=' + csrftoken
-            headers['Referer'] = login_url
+            headers["Cookie"] = "csrftoken=" + csrftoken
+            headers["Referer"] = login_url
 
             print("Logging into Platform to get the session id")
             r2 = requests.post(login_url, verify=False, data=data, headers=headers)
-            session_id = r2.cookies['sessionid']
+            session_id = r2.cookies["sessionid"]
         except Exception as e:
             print("Unable to get session id from the platfrom. Error: " + str(e))
             exit(1)
 
-    if (len(sys.argv) < 2):
+    if len(sys.argv) < 2:
         print("No test json specified as input")
         exit(0)
 
@@ -373,8 +368,8 @@ if __name__ == '__main__':
         connector = TwilioConnector()
         connector.print_progress_message = True
 
-        if (session_id is not None):
-            in_json['user_session_token'] = session_id
+        if session_id is not None:
+            in_json["user_session_token"] = session_id
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))

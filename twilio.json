@@ -9,9 +9,10 @@
     "product_name": "Twilio",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2017-2021 Splunk Inc.",
-    "app_version": "2.0.2",
-    "utctime_updated": "2021-03-05T04:20:06.000000Z",
+    "license": "Copyright (c) 2017-2024 Splunk Inc.",
+    "fips_compliant": false,
+    "app_version": "2.0.3",
+    "utctime_updated": "2022-01-07T22:47:19.000000Z",
     "package_name": "phantom_twilio",
     "main_module": "twilio_connector.py",
     "min_phantom_version": "4.9.39220",
@@ -97,7 +98,7 @@
                         "phone number",
                         "phone"
                     ],
-                    "column_name": "to phone",
+                    "column_name": "To Phone",
                     "column_order": 0,
                     "example_values": [
                         "5101112345"
@@ -106,7 +107,7 @@
                 {
                     "data_path": "action_result.parameter.message",
                     "data_type": "string",
-                    "column_name": "message",
+                    "column_name": "Message",
                     "column_order": 1,
                     "example_values": [
                         "Happy Halloween to GV"
@@ -153,7 +154,7 @@
                 {
                     "data_path": "action_result.data.*.status",
                     "data_type": "string",
-                    "column_name": "status",
+                    "column_name": "Status",
                     "column_order": 2,
                     "example_values": [
                         "queued",
@@ -317,5 +318,11 @@
             },
             "versions": "EQ(*)"
         }
-    ]
+    ],
+    "pip_dependencies": {
+        "wheel": []
+    },
+    "pip39_dependencies": {
+        "wheel": []
+    }
 }

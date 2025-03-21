@@ -1,6 +1,6 @@
 # File: twilio_connector.py
 #
-# Copyright (c) 2017-2024 Splunk Inc.
+# Copyright (c) 2017-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,11 +34,9 @@ class RetVal(tuple):
 
 
 class TwilioConnector(BaseConnector):
-
     def __init__(self):
-
         # Call the BaseConnectors init first
-        super(TwilioConnector, self).__init__()
+        super().__init__()
 
         self._state = None
 
@@ -54,14 +52,12 @@ class TwilioConnector(BaseConnector):
         return
 
     def _process_empty_reponse(self, response, action_result):
-
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, "Empty response and no information in the header"), None)
 
     def _process_html_response(self, response, action_result):
-
         # An html response, treat it like an error
         status_code = response.status_code
 
@@ -77,31 +73,29 @@ class TwilioConnector(BaseConnector):
         except:
             error_text = "Cannot parse error details"
 
-        message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code, error_text)
+        message = f"Status Code: {status_code}. Data from server:\n{error_text}\n"
 
         message = message.replace("{", "{{").replace("}", "}}")
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _process_json_response(self, r, action_result):
-
         # Try a json parse
         try:
             resp_json = r.json()
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(str(e))), None)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Unable to parse JSON response. Error: {e!s}"), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
         # You should process the error returned in the json
-        message = "Error from server. Status Code: {0} Data from server: {1}".format(r.status_code, r.text.replace("{", "{{").replace("}", "}}"))
+        message = "Error from server. Status Code: {} Data from server: {}".format(r.status_code, r.text.replace("{", "{{").replace("}", "}}"))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _process_response(self, r, action_result):
-
         # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data({"r_status_code": r.status_code})
@@ -126,14 +120,13 @@ class TwilioConnector(BaseConnector):
             return self._process_empty_reponse(r, action_result)
 
         # everything else is actually an error at this point
-        message = "Can't process response from server. Status Code: {0} Data from server: {1}".format(
+        message = "Can't process response from server. Status Code: {} Data from server: {}".format(
             r.status_code, r.text.replace("{", "{{").replace("}", "}}")
         )
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
-
         config = self.get_config()
 
         resp_json = None
@@ -141,20 +134,19 @@ class TwilioConnector(BaseConnector):
         try:
             request_func = getattr(requests, method)
         except AttributeError:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Invalid method: {0}".format(method)), resp_json)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Invalid method: {method}"), resp_json)
 
         # Create a URL to connect to
-        url = "{0}/Accounts/{1}{2}".format(self._base_url, self._account_sid, endpoint)
+        url = f"{self._base_url}/Accounts/{self._account_sid}{endpoint}"
 
         try:
             r = request_func(url, auth=(config["account_sid"], config["auth_token"]), data=data, headers=headers, params=params)
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. Details: {e!s}"), resp_json)
 
         return self._process_response(r, action_result)
 
     def _handle_test_connectivity(self, param):
-
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         if self._to_phone is None:
@@ -181,7 +173,6 @@ class TwilioConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _poll_task_status(self, message_id, action_result):
-
         polling_attempt = 0
 
         # timeout in minutes
@@ -190,12 +181,11 @@ class TwilioConnector(BaseConnector):
         max_polling_attempts = (int(timeout) * 60) / consts.TWILIO_SLEEP_SECS
 
         while polling_attempt < max_polling_attempts:
-
             polling_attempt += 1
 
-            self.send_progress("Polling attempt {0} of {1} to check status of message delivery".format(polling_attempt, max_polling_attempts))
+            self.send_progress(f"Polling attempt {polling_attempt} of {max_polling_attempts} to check status of message delivery")
 
-            ret_val, response = self._make_rest_call("/Messages/{0}.json".format(message_id), action_result)
+            ret_val, response = self._make_rest_call(f"/Messages/{message_id}.json", action_result)
 
             if phantom.is_fail(ret_val):
                 return RetVal(action_result.get_status(), None)
@@ -213,7 +203,6 @@ class TwilioConnector(BaseConnector):
         return RetVal(phantom.APP_SUCCESS, response)
 
     def _send_text(self, action_result, body, to_phone):
-
         data = {"Body": body, "To": to_phone, "From": self._from_phone}
 
         # make rest call
@@ -236,10 +225,9 @@ class TwilioConnector(BaseConnector):
         return RetVal(phantom.APP_SUCCESS, response)
 
     def _handle_send_text(self, param):
-
         # Implement the handler here
         # use self.save_progress(...) to send progress messages back to the platform
-        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
+        self.save_progress(f"In action handler for: {self.get_action_identifier()}")
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -260,7 +248,6 @@ class TwilioConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def handle_action(self, param):
-
         ret_val = phantom.APP_SUCCESS
 
         # Get the action that we are supposed to execute for this App Run
@@ -277,7 +264,6 @@ class TwilioConnector(BaseConnector):
         return ret_val
 
     def initialize(self):
-
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
@@ -299,14 +285,12 @@ class TwilioConnector(BaseConnector):
         return phantom.APP_SUCCESS
 
     def finalize(self):
-
         # Save the state, this data is saved accross actions and app upgrades
         self.save_state(self._state)
         return phantom.APP_SUCCESS
 
 
 if __name__ == "__main__":
-
     import argparse
     import sys
 
@@ -328,7 +312,6 @@ if __name__ == "__main__":
     password = args.password
 
     if username is not None and password is None:
-
         # User specified a username but not a password, so ask
         import getpass
 

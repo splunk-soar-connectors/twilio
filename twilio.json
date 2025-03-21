@@ -9,7 +9,7 @@
     "product_name": "Twilio",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2017-2024 Splunk Inc.",
+    "license": "Copyright (c) 2017-2025 Splunk Inc.",
     "fips_compliant": false,
     "app_version": "2.0.3",
     "utctime_updated": "2022-01-07T22:47:19.000000Z",

@@ -20,7 +20,7 @@
         "Twilio Cloud, 2021 on 02/10/2021"
     ],
     "app_wizard_version": "1.0.0",
-    "python_version": "3",
+    "python_version": ["3.9", "3.13"],
     "configuration": {
         "base_url": {
             "description": "Twilio Base URL (e.g. https://api.twilio.com/2010-04-01)",

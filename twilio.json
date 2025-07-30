@@ -11,8 +11,8 @@
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2025 Splunk Inc.",
     "fips_compliant": false,
-    "app_version": "2.0.3",
-    "utctime_updated": "2022-01-07T22:47:19.000000Z",
+    "app_version": "2.0.4",
+    "utctime_updated": "2025-07-30T17:55:58.895526Z",
     "package_name": "phantom_twilio",
     "main_module": "twilio_connector.py",
     "min_phantom_version": "4.9.39220",
@@ -20,7 +20,10 @@
         "Twilio Cloud, 2021 on 02/10/2021"
     ],
     "app_wizard_version": "1.0.0",
-    "python_version": ["3.9", "3.13"],
+    "python_version": [
+        "3.9",
+        "3.13"
+    ],
     "configuration": {
         "base_url": {
             "description": "Twilio Base URL (e.g. https://api.twilio.com/2010-04-01)",

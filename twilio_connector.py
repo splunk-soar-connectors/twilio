@@ -196,11 +196,20 @@ class TwilioConnector(BaseConnector):
                 return RetVal(action_result.set_status(phantom.APP_ERROR, "Status key not part of the response"), None)
 
             if status in consts.TWILIO_FINAL_STATUS:
-                break
+                if status == "delivered":
+                    return RetVal(phantom.APP_SUCCESS, response)
+
+                message = f"Message delivery failed with status: {status}"
+                if response.get("error_code") is not None:
+                    message += f", error code: {response['error_code']}"
+                if response.get("error_message"):
+                    message += f", error message: {response['error_message']}"
+                return RetVal(action_result.set_status(phantom.APP_ERROR, message), response)
 
             time.sleep(consts.TWILIO_SLEEP_SECS)
 
-        return RetVal(phantom.APP_SUCCESS, response)
+        message = f"Message delivery was not confirmed within {timeout} minute(s) for SID: {message_id}"
+        return RetVal(action_result.set_status(phantom.APP_ERROR, message), response)
 
     def _send_text(self, action_result, body, to_phone):
         data = {"Body": body, "To": to_phone, "From": self._from_phone}

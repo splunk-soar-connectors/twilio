@@ -1,9 +1,9 @@
 # Twilio
 
-Publisher: Splunk \
-Connector Version: 2.0.5 \
-Product Vendor: Twilio \
-Product Name: Twilio \
+Publisher: Splunk <br>
+Connector Version: 2.0.5 <br>
+Product Vendor: Twilio <br>
+Product Name: Twilio <br>
 Minimum Product Version: 4.9.39220
 
 This app integrates with Twilio for sending messages
@@ -22,14 +22,14 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
 [send message](#action-send-message) - Send an SMS Text
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -44,7 +44,7 @@ No Output
 
 Send an SMS Text
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 Sends an SMS text to the specified Phone number.
@@ -97,7 +97,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

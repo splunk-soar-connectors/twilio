@@ -1,7 +1,7 @@
 # Twilio
 
 Publisher: Splunk <br>
-Connector Version: 2.0.5 <br>
+Connector Version: 2.0.6 <br>
 Product Vendor: Twilio <br>
 Product Name: Twilio <br>
 Minimum Product Version: 4.9.39220

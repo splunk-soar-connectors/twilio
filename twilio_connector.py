@@ -153,7 +153,7 @@ class TwilioConnector(BaseConnector):
             self.save_progress("Connecting to the Twilio account to check connectivity")
 
             # make rest call
-            ret_val, response = self._make_rest_call(".json", action_result, method="get")
+            ret_val, _response = self._make_rest_call(".json", action_result, method="get")
 
             if phantom.is_fail(ret_val):
                 self.save_progress("Test Connectivity Failed")

@@ -18,7 +18,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **account_sid** | required | string | Account SID |
 **auth_token** | required | password | Auth Token |
 **from_phone** | required | string | From Phone Number (Twilio Assigned, e.g. +15101281337) |
-**to_phone** | optional | string | To Phone Number (Used only for test connectivity) |
+**to_phone** | optional | string | Optional test recipient number retained for existing assets; connectivity validation does not send SMS messages. |
 
 ### Supported Actions
 

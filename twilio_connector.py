@@ -47,7 +47,6 @@ class TwilioConnector(BaseConnector):
         self._from_phone = None
         self._account_sid = None
         self._auth_token = None
-        self._to_phone = None
 
         return
 
@@ -149,24 +148,13 @@ class TwilioConnector(BaseConnector):
     def _handle_test_connectivity(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        if self._to_phone is None:
-            self.save_progress("Connecting to the Twilio account to check connectivity")
+        self.save_progress("Connecting to the Twilio account to check connectivity")
 
-            # make rest call
-            ret_val, response = self._make_rest_call(".json", action_result, method="get")
+        ret_val, _ = self._make_rest_call(".json", action_result, method="get")
 
-            if phantom.is_fail(ret_val):
-                self.save_progress("Test Connectivity Failed")
-                return action_result.get_status()
-
-        else:
-            self.save_progress("Sending a message to validate config")
-
-            ret_val, _ = self._send_text(action_result, "Testing connectivity from Phantom to Twilio", self._to_phone)
-
-            if phantom.is_fail(ret_val):
-                self.save_progress("Test connectivity Failed")
-                return action_result.get_status()
+        if phantom.is_fail(ret_val):
+            self.save_progress("Test Connectivity Failed")
+            return action_result.get_status()
 
         self.save_progress("Test connectivity Passed")
 
@@ -289,8 +277,6 @@ class TwilioConnector(BaseConnector):
 
         self._account_sid = config["account_sid"]
         self._auth_token = config["auth_token"]
-        self._to_phone = config.get("to_phone")
-
         return phantom.APP_SUCCESS
 
     def finalize(self):

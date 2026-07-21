@@ -48,7 +48,7 @@
             "order": 3
         },
         "to_phone": {
-            "description": "To Phone Number (Used only for test connectivity)",
+            "description": "Optional test recipient number retained for existing assets; connectivity validation does not send SMS messages.",
             "data_type": "string",
             "order": 4
         }

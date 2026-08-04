@@ -274,7 +274,11 @@ class TwilioConnector(BaseConnector):
 
         config = self.get_config()
 
-        self._base_url = config["base_url"]
+        self._base_url = config["base_url"].rstrip("/")
+        if self._base_url not in consts.TWILIO_ALLOWED_API_BASE_URLS:
+            allowed_urls = ", ".join(consts.TWILIO_ALLOWED_API_BASE_URLS)
+            return self.set_status(phantom.APP_ERROR, f"Twilio Base URL must be one of: {allowed_urls}")
+
         self._from_phone = config["from_phone"]
 
         if not self._from_phone.startswith("+"):

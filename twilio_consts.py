@@ -16,3 +16,9 @@ TWILIO_FINAL_STATUS = ["failed", "delivered", "undelivered"]
 TWILIO_TIMEOUT_MINUTES = 1
 TWILIO_SLEEP_SECS = 5
 TWILIO_DEFAULT_REQUEST_TIMEOUT = 30
+TWILIO_ALLOWED_API_BASE_URLS = (
+    "https://api.twilio.com/2010-04-01",
+    "https://api.us1.twilio.com/2010-04-01",
+    "https://api.dublin.ie1.twilio.com/2010-04-01",
+    "https://api.sydney.au1.twilio.com/2010-04-01",
+)

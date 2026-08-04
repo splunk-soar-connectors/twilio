@@ -139,7 +139,14 @@ class TwilioConnector(BaseConnector):
         url = f"{self._base_url}/Accounts/{self._account_sid}{endpoint}"
 
         try:
-            r = request_func(url, auth=(config["account_sid"], config["auth_token"]), data=data, headers=headers, params=params)
+            r = request_func(
+                url,
+                auth=(config["account_sid"], config["auth_token"]),
+                data=data,
+                headers=headers,
+                params=params,
+                timeout=consts.TWILIO_DEFAULT_REQUEST_TIMEOUT,
+            )
         except Exception as e:
             return RetVal(action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. Details: {e!s}"), resp_json)
 
